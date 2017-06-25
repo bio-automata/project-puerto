@@ -62,7 +62,7 @@ public class Entity {
     }
 
     public Entity getDependence(String dependence){
-        if (this.textVariables.containsKey(dependence)){
+        if (this.dependences.containsKey(dependence)){
             return this.dependences.get(dependence);
         }
 

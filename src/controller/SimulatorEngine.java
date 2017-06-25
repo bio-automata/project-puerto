@@ -16,26 +16,24 @@ import model.system.Systema;
 
  */
 public class SimulatorEngine {
-	private Systema system;
+	private static Systema system;
 	
 
-	public void importConfigurationFile(){
-
+	public static void initialize(String filepath){
+		System.out.println("Construindo sistema");
+		system = SystemBuildingEngine.buildSystem(filepath);
+		System.out.println("Inicializando simulação");
+		system.startSimulation();
+		System.out.println("simulando");
+		simulate();
 	}
 
-	public void simulate(){
+	public static void simulate(){
 		//inicia a simulação, seta o estado do sistema como "simulando" = true
-		system.startSimulation();
-
 		//enquanto o sistema estiver em simulação
 		while(system.simulating()){
 			//retira da lista de eventos futuros o evento imediato e o executa
-			this.system.getNextImediateEvent().execute();
+			system.getNextImediateEvent().execute();
 		}
-	}
-
-
-	public void showResults(){
-		
 	}
 }

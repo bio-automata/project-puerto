@@ -1,19 +1,15 @@
 package test;
 
-import controller.SimulatorEngine;
+
 import model.entities.Entity;
-import model.events.Event;
-import model.events.Evente;
 import model.events.shipEvents.ShipArrivingEvent;
-import model.random.ExponentialDistribution;
 import model.random.time.ExponentialTimeDistribution;
-import model.random.time.RandomTimeGenerator;
 import model.random.time.TimeDistribution;
 import model.system.Systema;
 
 public class DistributionsTest {
 	public static void main(String args[]){
-		Systema system = new Systema();
+		Systema system = Systema.getInstance();
 		
 		
 		system.addEntityInQueue("equip", new Entity());

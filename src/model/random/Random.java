@@ -12,7 +12,9 @@ public class Random {
     private double currentValue;
 
     public Random(){
-    	this.setSeed(new java.util.Random().nextInt());
+    	
+    	this.setSeed(System.currentTimeMillis());
+    	//this.setSeed(Math.abs(new java.util.Random().nextInt()));
     }
     
     public void setSeed(double seed){

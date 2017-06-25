@@ -29,7 +29,7 @@ import model.system.collections.EntitySet;
 
 public class Systema {
     //hash Table com as variaveis de entrada do sistema
-
+	private static Systema instance = null;
 
     private double clock;                       //relógio do sistema
 
@@ -42,7 +42,7 @@ public class Systema {
     public RandomTimeGenerator randomTimeGenerator;
     public Random random;
 
-    public Systema(){
+    private Systema(){
         this.clock = 0;
         this.variables = new HashMap<>();
         this.entitySet = new EntitySet();
@@ -52,7 +52,16 @@ public class Systema {
         this.random = new Random();
         this.randomTimeGenerator = new RandomTimeGenerator();
     }
+    
+    public static Systema getInstance(){
+    	if(instance==null){
+    		instance = new Systema();
+    	}
+    	
+    	return instance;
+    }
 
+    
     public double getClock() {
         return clock;
     }
@@ -104,8 +113,8 @@ public class Systema {
 
 
     //lista de eventos futuros
-    public void agendFutureEvent(Event envent) {
-        this.futureEventList.addEvent(envent);
+    public void agendFutureEvent(Event event) {
+        this.futureEventList.addEvent(event);
     }
 
     public Event getNextImediateEvent() {
@@ -137,7 +146,7 @@ public class Systema {
     }*/
     
     public void addTimeDistribution(String key, TimeDistribution distribution){
-    	this.getRandomTimeGenerator().addTimeDistribution(key, distribution);;
+    	this.getRandomTimeGenerator().addTimeDistribution(key, distribution);
     }
     
     public Double getEventDuration(String key){
@@ -158,8 +167,19 @@ public class Systema {
         return this.getEntityQueueSet().getEntityQueue(key).getEntity();
     }
 
-    public EntityList getQueue(String key){
+    private EntityList getQueue(String key){
         return this.getEntityQueueSet().getEntityQueue(key);
+    }
+    
+    public Boolean hasEntityAvailableInQueue(String key){
+    	EntityList entityList = this.getEntityQueueSet().getEntityQueue(key); 
+    	
+    	if(entityList!=null){
+    		return this.getQueue(key).available();
+    	}
+    	else{
+    		return false;
+    	}
     }
 
 
@@ -174,6 +194,7 @@ public class Systema {
     }
     
     public void report(String news){
-    	System.out.println(news);
+    	
+    	//System.out.printf("%.4f: %s\n", this.getClock(), news);
     }
 }
