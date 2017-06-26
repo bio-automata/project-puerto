@@ -60,7 +60,7 @@ public class Random {
         return -(1.0/lambda)*Math.log(1.0-this.percentual());
     }
 
-    public double triangular(double a, double b, double c){
+    /*public double triangular(double a, double b, double c){
         double x;
 
         x = this.percentual();
@@ -73,6 +73,19 @@ public class Random {
         else{
             return 2/(b-a);
         }
+    }*/
+
+    public double triangular( double xMin, double c,  double xMax){
+
+        double p = new java.util.Random().nextDouble();//uniform(0,1);
+        double q = 1.0 - p;
+
+        if (p <= (c - xMin) / (xMax - xMin)){
+            return xMin + Math.sqrt((xMax - xMin) * (c - xMin) * p);
+        }else {
+            return xMax - Math.sqrt((xMax - xMin) * (xMax - c) * q);
+        }
+
     }
 
     public double poison(){     //ainda não implementada
