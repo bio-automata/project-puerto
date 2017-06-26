@@ -10,6 +10,7 @@ import model.events.Event;
 import model.random.Random;
 import model.random.time.RandomTimeGenerator;
 import model.random.time.TimeDistribution;
+import model.system.collections.EntityCollection;
 import model.system.collections.EntityList;
 import model.system.collections.EntityQueueSet;
 import model.system.collections.EntitySet;
@@ -153,6 +154,7 @@ public class Systema {
     	return this.getRandomTimeGenerator().getTime(key);
     }
 
+    
     public void addEntityInEntitySet(String key, Entity entity){
         this.getEntitySet().addEntity(key, entity);
     }
@@ -162,6 +164,9 @@ public class Systema {
     }
 
     
+    public Entity getEntityFromSet(String key, int id){
+        return this.getEntitySet().getCollection(key).getEntity(id);
+    }
     
     public Entity getEntityFromQueue(String key){
         return this.getEntityQueueSet().getEntityQueue(key).getEntity();
@@ -175,6 +180,17 @@ public class Systema {
     	EntityList entityList = this.getEntityQueueSet().getEntityQueue(key); 
     	
     	if(entityList!=null){
+    		return this.getQueue(key).available();
+    	}
+    	else{
+    		return false;
+    	}
+    }
+    
+    public boolean thereIsSet(String key){
+    	EntityCollection entityCollection = this.getEntitySet().getCollection(key); 
+    	
+    	if(entityCollection!=null){
     		return this.getQueue(key).available();
     	}
     	else{
@@ -195,6 +211,6 @@ public class Systema {
     
     public void report(String news){
     	
-    	//System.out.printf("%.4f: %s\n", this.getClock(), news);
+    	System.out.printf("%.4f: %s\n", this.getClock(), news);
     }
 }
