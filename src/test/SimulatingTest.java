@@ -10,6 +10,6 @@ import model.system.Systema;
 
 public class SimulatingTest {
 	public static void main(String args[]){
-		SimulatorEngine.initialize("cenario.txt");
+		SimulatorEngine.initialize(System.getProperty("user.dir")+"cenario.txt");
 	}
 }

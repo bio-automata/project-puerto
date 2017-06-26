@@ -2,7 +2,7 @@
 .project
 .classpath
 .settings/
+.idea/workspace.xml
 .idea/
 *.iml
 bin/
-
