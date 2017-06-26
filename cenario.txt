@@ -21,7 +21,7 @@
 
 # Tempo maximo de simulacao, em segundos. O valor abaixo
 # corresponde a 30 dias * 24 horas * 60 minutos * 60 segundos.
-U TSM 259200
+U TSM 25920
 
 ############################################################
 #                                                          #
