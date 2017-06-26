@@ -28,18 +28,20 @@ public class EndCartMovingLoadCartEvent extends Event{
         if (system.hasEntityAvailableInQueue("rtg")){
         	system.report("Grua Retornando vazia");
         	
-        	Entity vehicle = system.getEntityFromQueue("rtg");
+        	Entity rtg = system.getEntityFromQueue("rtg");
+        	rtg.setDependence("cart", cart);
         	
-        	Event event = new EndRTGUnloadCartEvent(this.system);
+        	Event event = new EndRTGUnloadCartEvent(rtg, this.system);
         	event.setOccurrenceTime(this.system.getClock()+this.system.getEventDuration(EventConstants.RTG_UNLOAD_CART_EVENT));
         	this.system.agendFutureEvent(event);
 
         	
         }
         else if (system.hasEntityAvailableInQueue("steaker")){
-        	Entity vehicle = system.getEntityFromQueue("steaker");
+        	Entity steaker = system.getEntityFromQueue("steaker");
+        	steaker.setDependence("cart", cart);
         	
-        	Event event = new EndSteakerUnloadCartEvent(this.system);
+        	Event event = new EndSteakerUnloadCartEvent(steaker, this.system);
         	event.setOccurrenceTime(this.system.getClock()+this.system.getEventDuration(EventConstants.STEAKER_EMPTY_RETURNING_EVENT));
         	this.system.agendFutureEvent(event);
         }

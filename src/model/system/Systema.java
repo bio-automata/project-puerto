@@ -190,8 +190,10 @@ public class Systema {
     public boolean thereIsSet(String key){
     	EntityCollection entityCollection = this.getEntitySet().getCollection(key); 
     	
+    	//return this.getEntitySet()
     	if(entityCollection!=null){
-    		return this.getQueue(key).available();
+    		//return this.getQueue(key).available();
+    		return true;
     	}
     	else{
     		return false;

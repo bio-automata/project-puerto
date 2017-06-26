@@ -35,7 +35,11 @@ public class EntitySet {
     }
 
     public EntityCollection getCollection (String key){
-        return this.entitySet.get(key);
+    	if(this.entitySet.containsKey(key)){
+    		return this.entitySet.get(key);
+    	}
+    	
+    	return null;
     }
     public Entity getEntity(String key, int i){
         return this.getCollection(key).getEntity(i);
