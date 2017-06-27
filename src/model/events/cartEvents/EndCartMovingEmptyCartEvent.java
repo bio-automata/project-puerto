@@ -18,10 +18,10 @@ public class EndCartMovingEmptyCartEvent extends Event{
     }
 
     public void execute(){
-        system.incrementClock(this.getOccurrenceTime());
+    	this.system.setClock(this.getOccurrenceTime());
         
         if(system.hasEntityAvailableInQueue("crane waiting cart")){
-        	system.report("Carreta Retornando vazia");
+        	system.report("Carreta retornando vazia");
         	
         	Entity crane = this.system.getEntityFromQueue("crane waiting cart");
         	crane.setDependence("cart", this.cart);

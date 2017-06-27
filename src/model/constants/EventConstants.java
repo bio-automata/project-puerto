@@ -31,14 +31,14 @@ public class EventConstants{
 	
 	
 	 
-	public static final String STEAKER_QUANTITY = "SQTD";
-	public static final String STEAKER_UNLOADING_CART_EVENT = "SDCG";
-	public static final String STEAKER_MOVING_CONTAINER_TO_STACK_EVENT = "SMCP";
-	public static final String STEAKER_STACKING_CONTAINER_EVENT = "SEMP";	
-	public static final String STEAKER_UNSTACKING_CONTAINER_EVENT = "SDMP";
-	public static final String STEAKER_MOVING_CONTAINER_TO_RAILWAY_EVENT = "SMTF";
-	public static final String STEAKER_LOADING_WAGON_EVENT = "SMCV";
-	public static final String STEAKER_EMPTY_RETURNING_EVENT = "SMVP";
+	public static final String STACKER_QUANTITY = "SQTD";
+	public static final String STACKER_UNLOADING_CART_EVENT = "SDCG";
+	public static final String STACKER_MOVING_CONTAINER_TO_STACK_EVENT = "SMCP";
+	public static final String STACKER_STACKING_CONTAINER_EVENT = "SEMP";	
+	public static final String STACKER_UNSTACKING_CONTAINER_EVENT = "SDMP";
+	public static final String STACKER_MOVING_CONTAINER_TO_RAILWAY_EVENT = "SMTF";
+	public static final String STACKER_LOADING_WAGON_EVENT = "SMCV";
+	public static final String STACKER_EMPTY_RETURNING_EVENT = "SMVP";
 	
 	
 	public static final String TERMINAL_QUANTITY = "FQTD";

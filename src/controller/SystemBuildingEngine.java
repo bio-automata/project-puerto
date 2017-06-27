@@ -4,9 +4,11 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 
 import model.constants.EventConstants;
+import model.constants.SystemConstants;
 import model.entities.Entity;
 import model.events.EndSimulationEvent;
 import model.events.Event;
+import model.events.railwaycompositionEvents.EndTrainArrivingEvent;
 import model.events.shipEvents.ShipArrivingEvent;
 import model.random.time.ExponentialTimeDistribution;
 import model.random.time.TriangularTimeDistribution;
@@ -18,6 +20,11 @@ public class SystemBuildingEngine {
 		Event event = new EndSimulationEvent(system);
     	system.agendFutureEvent(event);
     	
+    	//configura as variáveis do sistema
+    	system.setVariable(SystemConstants.CRANE_CONTAINER_PRODUCTION, 0.0);
+    	system.setVariable(SystemConstants.RTG_CONTAINER_PRODUCTION, 0.0);
+    	
+    	
     	//time = duration;
     	time = 0;
     	while(time<system.getVariable("UTSM")){
@@ -26,6 +33,18 @@ public class SystemBuildingEngine {
     		//System.out.println(time); 
     		
     		event = new ShipArrivingEvent(system);
+    		event.setOccurrenceTime(time);
+        	system.agendFutureEvent(event);
+    	}
+    	
+    	
+    	time = 0;
+    	while(time<system.getVariable("UTSM")){
+    		
+    		time = time+system.getEventDuration(EventConstants.TRAIN_ARRIVING_EVENT);
+    		//System.out.println(time); 
+    		
+    		event = new EndTrainArrivingEvent(system);
     		event.setOccurrenceTime(time);
         	system.agendFutureEvent(event);
     	}
@@ -110,6 +129,8 @@ public class SystemBuildingEngine {
     	
     	System.out.println("Gerando situação inicial");
     	generateInitialScenario(system);
+    	
+    	
     	
     	return system;
     }

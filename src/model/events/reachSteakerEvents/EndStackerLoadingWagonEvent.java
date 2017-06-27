@@ -6,8 +6,8 @@ import model.system.Systema;
 /**
  * Created by dicus on 11/06/17.
  */
-public class EndSteakerLoadingWagonEvent extends Event{
-    public EndSteakerLoadingWagonEvent(Systema system){
+public class EndStackerLoadingWagonEvent extends Event{
+    public EndStackerLoadingWagonEvent(Systema system){
     	super(system);
 
     }

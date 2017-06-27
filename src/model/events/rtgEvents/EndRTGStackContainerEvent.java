@@ -14,69 +14,32 @@ import model.system.Systema;
  * Created by dicus on 11/06/17.
  */
 public class EndRTGStackContainerEvent extends Event{
-	Entity rtg;
+	Entity stak;
 	
-    public EndRTGStackContainerEvent(Systema system){
+    public EndRTGStackContainerEvent(Entity stak, Systema system){
     	super(system);
-    	this.rtg = rtg;
+    	this.stak = stak;
     }
 
     public void execute(){
-        system.incrementClock(this.getOccurrenceTime());
-        system.report("RTG empilhou container na pilha");
+    	this.system.setClock(this.getOccurrenceTime());
+        this.system.report("RTG empilhou container na pilha");
 
-        //decrementa contaier do navio
-
-
-
-        //
-        Entity stak;
-        //se não há pilhas no pátio, cria uma nova pilha
-        if(!this.system.thereIsSet(SystemConstants.CONTAINER_STAKS)){
-        	System.out.println("cria a primeira pilha");
-        	//cria uma nova pilha e já empilha o container
-        	this.system.setVariable(SystemConstants.NUMBER_OF_CONTAINERSTAKS, 1.0);
-        	
-        	stak = new Entity();
-        	stak.setNumericVariable(StackConstants.NUMBER_OF_CONTAINERS, 1);
-        	stak.setNumericVariable(StackConstants.MAX_NUMBER_OF_CONTAINERS, 5);
-        	
-        	this.system.addEntityInEntitySet(SystemConstants.CONTAINER_STAKS, stak);
-        }
+        Entity rtg = stak.getDependence("rtg");
+        this.stak.setNumericVariable(StackConstants.NUMBER_OF_CONTAINERS, stak.getNumericVariable(StackConstants.NUMBER_OF_CONTAINERS)+1);
+        this.system.setVariable(SystemConstants.RTG_CONTAINER_PRODUCTION, this.system.getVariable(SystemConstants.RTG_CONTAINER_PRODUCTION)+1);
         
-      //se há pilha
-        else{
+        system.report("RTG foi liberado");
+        this.system.addEntityInQueue("rtg", rtg);
+        
+        //se existe rtg/steaker aguardadno na fila da pilha, já aguarda novo empilhamento
+        if(this.system.hasEntityAvailableInQueue("rtg waiting for stack "+this.stak.getNumericVariable(StackConstants.INDEX))){
+        	rtg = this.system.getEntityFromQueue("rtg waiting for stack "+this.stak.getNumericVariable(StackConstants.INDEX));
         	
-        	//sorteia uma pilha
-        	System.out.print("numero de pilhas ");
-        	System.out.println(this.system.getVariable(SystemConstants.NUMBER_OF_CONTAINERSTAKS).intValue());
-        	
-        	int stakQuantity = this.system.getVariable(SystemConstants.NUMBER_OF_CONTAINERSTAKS).intValue();	//numero de pilhas no sistema
-            int stakindex = new Random().nextInt(stakQuantity);
-            
-            stak = this.system.getEntityFromSet(SystemConstants.CONTAINER_STAKS, stakindex);
-            
-            
-            System.out.println("tenta empilhar" );
-            System.out.println(stak.getNumericVariable(StackConstants.NUMBER_OF_CONTAINERS));
-            
-            if(stak.getNumericVariable(StackConstants.NUMBER_OF_CONTAINERS)>stak.getNumericVariable(StackConstants.MAX_NUMBER_OF_CONTAINERS)){
-            	System.out.println("cria nova pilha");
-            	//cria uma nova pilha
-            	this.system.setVariable(SystemConstants.NUMBER_OF_CONTAINERSTAKS, this.system.getVariable(SystemConstants.NUMBER_OF_CONTAINERSTAKS)+1);
-            	            	
-            	stak = new Entity();
-            	stak.setNumericVariable(StackConstants.NUMBER_OF_CONTAINERS, 1);
-            	stak.setNumericVariable(StackConstants.MAX_NUMBER_OF_CONTAINERS, 5);
-            	
-            	this.system.addEntityInEntitySet(SystemConstants.CONTAINER_STAKS, stak);
-            	this.system.setVariable(SystemConstants.NUMBER_OF_CONTAINERSTAKS, this.system.getVariable(SystemConstants.NUMBER_OF_CONTAINERSTAKS)+1);
-            }
-            else{
-            	//stak = this.system.getEntityFromSet(SystemConstants.CONTAINER_STAKS, stakindex);
-            	System.out.println("inseriu na pilha");
-                stak.setNumericVariable(StackConstants.NUMBER_OF_CONTAINERS, stak.getNumericVariable(StackConstants.NUMBER_OF_CONTAINERS)+1.0);
-            }
+        	stak.setDependence("rtg", rtg);
+        	Event event = new EndRTGStackContainerEvent(stak, this.system);
+            event.setOccurrenceTime(this.system.getClock()+this.system.getEventDuration(EventConstants.RTG_STACKING_CONTAINER_EVENT));
+            this.system.agendFutureEvent(event);
         }
     }
 }

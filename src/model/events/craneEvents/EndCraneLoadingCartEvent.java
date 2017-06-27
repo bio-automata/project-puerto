@@ -27,15 +27,14 @@ public class EndCraneLoadingCartEvent extends Event{
 		// TODO Auto-generated method stub
     	//atualisa o relógio do sistema
 		this.system.report("Grua carrregou uma carreta");
-		
         system.setClock(this.getOccurrenceTime());
         
         Event event = new EndCraneEmptyReturningEvent(crane, this.system);
-        event.setOccurrenceTime(this.getOccurrenceTime()+this.system.getEventDuration(EventConstants.CRANE_EMPTY_RETURNING_EVENT));
+        event.setOccurrenceTime(this.system.getClock()+this.system.getEventDuration(EventConstants.CRANE_EMPTY_RETURNING_EVENT));
         this.system.agendFutureEvent(event);
 
         event = new EndCartMovingLoadCartEvent(this.cart, system);
-        event.setOccurrenceTime(this.getOccurrenceTime()+this.system.getEventDuration(EventConstants.CART_MOVING_LOAD_EVENT));
+        event.setOccurrenceTime(this.system.getClock()+this.system.getEventDuration(EventConstants.CART_MOVING_LOAD_EVENT));
         this.system.agendFutureEvent(event);
 	}
 }

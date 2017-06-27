@@ -5,7 +5,7 @@ import model.entities.Entity;
 import model.entities.vehicles.Cart;
 import model.events.Event;
 import model.events.equipEvents.EndEquipUndockingEvent;
-import model.events.reachSteakerEvents.EndSteakerUnloadCartEvent;
+import model.events.reachSteakerEvents.EndStackerUnloadCartEvent;
 import model.events.rtgEvents.EndRTGUnloadCartEvent;
 import model.system.Systema;
 
@@ -22,34 +22,33 @@ public class EndCartMovingLoadCartEvent extends Event{
 
     @Override
     public void execute(){
-        system.setClock(this.getOccurrenceTime());
+        //system.setClock(this.getOccurrenceTime());
+    	this.system.setClock(this.getOccurrenceTime());
         system.report("Carreta transportou container até o pátio");
         
+        //
         if (system.hasEntityAvailableInQueue("rtg")){
-        	system.report("Grua Retornando vazia");
-        	
         	Entity rtg = system.getEntityFromQueue("rtg");
         	rtg.setDependence("cart", cart);
-        	
+        	this.cart.setDependence("rtg", rtg);
+        	        	
         	Event event = new EndRTGUnloadCartEvent(rtg, this.system);
         	event.setOccurrenceTime(this.system.getClock()+this.system.getEventDuration(EventConstants.RTG_UNLOAD_CART_EVENT));
-        	this.system.agendFutureEvent(event);
-
-        	
+        	this.system.agendFutureEvent(event);        	
         }
-        else if (system.hasEntityAvailableInQueue("steaker")){
-        	Entity steaker = system.getEntityFromQueue("steaker");
+        //
+        else if (system.hasEntityAvailableInQueue("staCker")){
+        	Entity steaker = system.getEntityFromQueue("staCker");
         	steaker.setDependence("cart", cart);
         	
-        	Event event = new EndSteakerUnloadCartEvent(steaker, this.system);
-        	event.setOccurrenceTime(this.system.getClock()+this.system.getEventDuration(EventConstants.STEAKER_EMPTY_RETURNING_EVENT));
-        	this.system.agendFutureEvent(event);
+        	Event event = new EndStackerUnloadCartEvent(steaker, this.system);
+        	event.setOccurrenceTime(this.system.getClock()+this.system.getEventDuration(EventConstants.STACKER_EMPTY_RETURNING_EVENT));
+        	//this.system.agendFutureEvent(event);
         }
+        //
         else{
-        	
             system.getEntityQueueSet().addEntity("cart waiting unload", cart);
-            system.report("Carreta aguardando descarregar container");
+            system.report("Carreta aguardando para descarregar container");
         }
-
     }
 }

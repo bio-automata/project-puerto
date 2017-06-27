@@ -10,9 +10,17 @@ import model.random.time.ExponentialTimeDistribution;
 import model.random.time.TimeDistribution;
 import model.system.Systema;
 
-public class SimulatingTest {
+public class TestEventList {
 	public static void main(String args[]){
-		//SimulatorEngine.initialize(System.getProperty("user.dir")+"cenario.txt");
-		SimulatorEngine.initialize("cenario.txt");
+		FutureEventList f = new FutureEventList();
+		double d = 0;
+		for(int i = 0 ; i< 10000; i++){
+			d = d+new Random().nextFloat();
+			
+			f.addEvent(d);
+			if(new Random().nextFloat()<0.1){
+				System.out.println(f.getEvent());
+			}
+		}
 	}
 }

@@ -212,7 +212,6 @@ public class Systema {
     }
     
     public void report(String news){
-    	
     	System.out.printf("%.4f: %s\n", this.getClock(), news);
     }
 }

@@ -14,7 +14,7 @@ public class EntityName {
 			case "R":
 				return "rtg";
 			case "S":
-				return "steaker";
+				return "stacker";
 			case "T":
 				return "raillway";
 		}

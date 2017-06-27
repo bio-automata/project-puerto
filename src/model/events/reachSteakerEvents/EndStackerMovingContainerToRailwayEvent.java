@@ -6,13 +6,13 @@ import model.system.Systema;
 /**
  * Created by dicus on 11/06/17.
  */
-public class EndSteakerMovingContainerToStackEvent extends Event{
-    public EndSteakerMovingContainerToStackEvent(Systema system){
+public class EndStackerMovingContainerToRailwayEvent extends Event{
+    public EndStackerMovingContainerToRailwayEvent(Systema system){
     	super(system);
-
     }
 
     public void execute(){
+    	
         system.setClock(this.getDurationTime());
     }
 }

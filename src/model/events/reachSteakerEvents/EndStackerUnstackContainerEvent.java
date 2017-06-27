@@ -6,13 +6,13 @@ import model.system.Systema;
 /**
  * Created by dicus on 11/06/17.
  */
-public class EndSteakerUnstackContainerEvent extends Event{
-    public EndSteakerUnstackContainerEvent(Systema system){
+public class EndStackerUnstackContainerEvent extends Event{
+    public EndStackerUnstackContainerEvent(Systema system){
     	super(system);
     }
 
     public void execute(){
-        system.incrementClock(this.getDurationTime());
+    	this.system.setClock(this.getOccurrenceTime());
 
     }
 }
