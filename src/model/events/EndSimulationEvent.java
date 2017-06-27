@@ -15,10 +15,6 @@ public class EndSimulationEvent extends Event{
     public void execute(){
         System.out.println("Simulação terminou!!!");
         
-        this.system.endSimulation("teste");;
-        
-        
-        
-        //System.exit(0);
+        this.system.endSimulation();
     }
 }

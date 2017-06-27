@@ -96,4 +96,8 @@ public class EntityList {
     public boolean available(){
         return this.entityList.size()>0;
     }
+    
+    public int size(){
+    	return this.entityList.size();
+    }
 }

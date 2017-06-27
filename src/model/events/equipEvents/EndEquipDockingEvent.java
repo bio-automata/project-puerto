@@ -36,7 +36,7 @@ public class EndEquipDockingEvent extends Event{
         	
         	//cria evento de içar container
         	
-            Event event = new EndCraneRiseContainerEvent(this.ship, this.system);
+            Event event = new EndCraneRiseContainerEvent(crane, this.system);
             event.setOccurrenceTime(this.system.getClock()+system.getEventDuration(EventConstants.CRANE_RISING_CONTAINER_EVENT));
             system.getFutureEventList().addEvent(event);            
         	

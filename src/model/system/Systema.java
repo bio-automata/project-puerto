@@ -57,8 +57,9 @@ public class Systema {
     }
     
     public static Systema getInstance(){
+    	instance = new Systema();
     	if(instance==null){
-    		instance = new Systema();
+    		
     	}
     	
     	return instance;
@@ -214,21 +215,10 @@ public class Systema {
     }
     
     public void report(String news){
-    	System.out.printf("%.4f: %s\n", this.getClock(), news);
+    	//System.out.printf("%.4f: %s\n", this.getClock(), news);
     }
     
-    public void endSimulation(String address){
+    public void endSimulation(){
     	this.simulating = false;
-		try {
-			BufferedWriter file;
-			file = new BufferedWriter(new FileWriter(address));
-			file.write("Indicdores_de_desempenho:");
-			file.write("\nProdutividade_da_grua "+this.getVariable(SystemConstants.CRANE_CONTAINER_PRODUCTION)/this.getClock());
-			file.write("\nProdutividade_dos_RTGs "+this.getVariable(SystemConstants.RTG_CONTAINER_PRODUCTION)/this.getClock());
-			file.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			System.out.println("Erro ao gerar relátório de saída");
-		}
     }
 }

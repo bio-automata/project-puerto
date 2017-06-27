@@ -1,9 +1,13 @@
 package controller;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import model.constants.EventConstants;
+import model.constants.StackConstants;
 import model.constants.SystemConstants;
 import model.entities.Entity;
 import model.events.EndSimulationEvent;
@@ -48,15 +52,29 @@ public class SystemBuildingEngine {
     		event.setOccurrenceTime(time);
         	system.agendFutureEvent(event);
     	}
-    	
+    	/*
     	//numero de estações
-    	int i, qtd = 10;
+    	int i, qtd = system.getVariable("FQTD").intValue();
     	
     	for(i=0;i<qtd;i++){
     		system.addEntityInQueue("railway", new Entity());
-    	}
+    	}*/
     	
+    	
+    	
+    	int i, qtd = 1000;
+    	Entity stack;
     	system.setVariable(SystemConstants.NUMBER_OF_CONTAINERSTAKS, 0.0);	//numero de pilhas no sistema
+    	for(i=0;i<qtd;i++){
+    		system.setVariable(SystemConstants.NUMBER_OF_CONTAINERSTAKS, system.getVariable(SystemConstants.NUMBER_OF_CONTAINERSTAKS)+1);
+    		
+    		stack = new Entity();
+        	stack.setNumericVariable(StackConstants.INDEX, system.getVariable(SystemConstants.NUMBER_OF_CONTAINERSTAKS)+1);
+        	stack.setNumericVariable(StackConstants.NUMBER_OF_CONTAINERS, 0);
+        	stack.setNumericVariable(StackConstants.MAX_NUMBER_OF_CONTAINERS, 5);
+        	
+        	system.addEntityInEntitySet(SystemConstants.CONTAINER_STAKS, stack);
+    	}
 	}
 	
 	
@@ -142,6 +160,5 @@ public class SystemBuildingEngine {
     	
     	
     	return system;
-    }
-    
+    }    
 }

@@ -21,7 +21,7 @@
 
 # Tempo maximo de simulacao, em segundos. O valor abaixo
 # corresponde a 30 dias * 24 horas * 60 minutos * 60 segundos.
-U TSM 1500
+U TSM 2592000
 
 ############################################################
 #                                                          #
@@ -44,7 +44,7 @@ N CHG 0.003333
 ############################################################
 
 # Quantidade de gruas disponivel nos cais. Default = 3.
-G QTD 20
+G QTD 12
 
 # Tempo de Icamento da Grua, em minutos: T(xxx,xxx,xxx)
 G ICA 0.25 0.28 0.58
@@ -65,7 +65,7 @@ G RET 0.25 0.41 0.73
 ############################################################
 
 # Quantidade de equipes disponiveis para atracar/desatracar
-E QTD 20
+E QTD 10
 
 # Tempo de atracamento
 E ATR 0.5 1.5 2.0
@@ -80,7 +80,7 @@ E DTR 0.41 0.75 1.0
 ############################################################
 
 # Inspirado nos cais das Darsenas de Puerto Nuevo
-Q QTD 20
+Q QTD 24
 
 ############################################################
 #                                                          #
@@ -89,7 +89,7 @@ Q QTD 20
 ############################################################
 
 # Quantidade de carretas disponiveis para operar entre cais e patio
-C QTD 30
+C QTD 60
 
 # Tempo de Movimentar Vazio, em segundos
 C MVZ 0.36 0.83 1.36
@@ -104,7 +104,7 @@ C MCH 0.45 1.05 1.71
 ############################################################
 
 # Quantidade de RTGs disponiveis no patio
-R QTD 2
+R QTD 50
 
 # Tempo de descarga de container no patio, retirando do caminhao
 R DCG 1.0 1.75 2.5
@@ -122,7 +122,7 @@ R EMP 0.25 0.50 1.0
 ############################################################
 
 # Quantidade de reach stackers no patio
-S QTD 25
+S QTD 50
 
 # Tempo de descarga de container no patio, retirando do caminhao
 S DCG 1.0 1.75 2.5
@@ -152,7 +152,7 @@ S MVP 2.0 2.8 3.1
 #                                                          #
 ############################################################
 
-F QTD 1
+F QTD 2
 
 ############################################################
 #                                                          #

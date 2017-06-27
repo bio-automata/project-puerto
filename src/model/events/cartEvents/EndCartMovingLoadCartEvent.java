@@ -1,6 +1,7 @@
 package model.events.cartEvents;
 
 import model.constants.EventConstants;
+import model.constants.SystemConstants;
 import model.entities.Entity;
 import model.entities.vehicles.Cart;
 import model.events.Event;
@@ -25,6 +26,16 @@ public class EndCartMovingLoadCartEvent extends Event{
         //system.setClock(this.getOccurrenceTime());
     	this.system.setClock(this.getOccurrenceTime());
         system.report("Carreta transportou container até o pátio");
+        
+        this.system.report("Produtividade dos RTGs: "+this.system.getVariable(SystemConstants.RTG_CONTAINER_PRODUCTION));
+        
+        system.report("Numero RTGs livres:"+this.system.getEntityQueueSet().getEntityQueue("rtg").size());
+        /*try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
         
         //
         if (system.hasEntityAvailableInQueue("rtg")){

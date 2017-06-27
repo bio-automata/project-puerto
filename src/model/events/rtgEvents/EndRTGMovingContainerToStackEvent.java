@@ -81,6 +81,6 @@ public class EndRTGMovingContainerToStackEvent extends Event{
         else{
         	this.system.report("Fila em espera, RTG aguardando para empilhar");
         	this.system.addEntityInQueue("rtg waiting for stack "+stack.getNumericVariable(StackConstants.INDEX), rtg);
-        }
+        }        
     }
 }

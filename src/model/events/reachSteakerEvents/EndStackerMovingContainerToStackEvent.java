@@ -67,10 +67,10 @@ public class EndStackerMovingContainerToStackEvent extends Event{
             }
         }
         
-        //se não há rtg na fila da pilha 
+        //se não há rtg na fila da pilha
         if((!this.system.hasEntityAvailableInQueue("rtg waiting for stack "+stack.getNumericVariable(StackConstants.INDEX))) && (!this.system.hasEntityAvailableInQueue("stacker waiting for stack "+stack.getNumericVariable(StackConstants.INDEX))) && (!this.system.hasEntityAvailableInQueue("stacker waiting for unstack "+stack.getNumericVariable(StackConstants.INDEX)))){
         	this.system.report("Não há fila na pilha, Reach Stacker pode empilhar");
-        	double eventTimeDuration = this.system.getClock()+stack.getNumericVariable(StackConstants.INDEX)*10;
+        	double eventTimeDuration = this.system.getClock()+this.system.getEventDuration(EventConstants.STACKER_MOVING_CONTAINER_TO_STACK_EVENT)+stack.getNumericVariable(StackConstants.INDEX)*10;
         	stack.setDependence("stacker", this.stacker);
         	Event event = new EndStackerStackContainerEvent(stack, this.system);
             //event.setOccurrenceTime(this.system.getClock()+this.system.getEventDuration(EventConstants.STACKER_STACKING_CONTAINER_EVENT));

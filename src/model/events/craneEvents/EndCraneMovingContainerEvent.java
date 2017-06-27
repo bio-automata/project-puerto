@@ -24,7 +24,6 @@ public class EndCraneMovingContainerEvent extends Event{
         system.setClock(this.getOccurrenceTime());
         this.system.report("Grua movimentou um container para transporte");
         
-
         if (system.hasEntityAvailableInQueue("cart")){
             Entity cart = system.getEntityFromQueue("cart");
             cart.setDependence("crane", this.crane);

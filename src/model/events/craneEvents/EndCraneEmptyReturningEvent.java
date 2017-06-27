@@ -30,7 +30,7 @@ public class EndCraneEmptyReturningEvent extends Event{
         this.system.report("Grua retornou vazia para içar outro container");
 
         if(ship.getNumericVariable(ShipConstants.NUMBER_OF_CONTAINERS)>0){//se existe container no navio
-        	Event event = new EndCraneRiseContainerEvent(ship, system);
+        	Event event = new EndCraneRiseContainerEvent(this.crane, system);
     		event.setOccurrenceTime(this.system.getClock()+this.system.getEventDuration(EventConstants.CRANE_RISING_CONTAINER_EVENT));
     		this.system.agendFutureEvent(event);
         }

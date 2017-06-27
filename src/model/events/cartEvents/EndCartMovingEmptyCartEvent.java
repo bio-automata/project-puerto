@@ -3,6 +3,7 @@ package model.events.cartEvents;
 import model.constants.EventConstants;
 import model.entities.Entity;
 import model.events.Event;
+import model.events.craneEvents.EndCraneLoadingCartEvent;
 import model.events.craneEvents.EndCraneRiseContainerEvent;
 import model.system.Systema;
 
@@ -19,15 +20,15 @@ public class EndCartMovingEmptyCartEvent extends Event{
 
     public void execute(){
     	this.system.setClock(this.getOccurrenceTime());
-        
+    	system.report("Carreta retornou vazia");
+    	
         if(system.hasEntityAvailableInQueue("crane waiting cart")){
-        	system.report("Carreta retornando vazia");
-        	
+        	system.report("Existe grua em espera, carreta irá carregar na grua");
         	Entity crane = this.system.getEntityFromQueue("crane waiting cart");
         	crane.setDependence("cart", this.cart);
         	this.cart.setDependence("crane", crane);
         	
-        	Event event = new EndCartMovingLoadCartEvent(cart, system);
+        	Event event = new EndCraneLoadingCartEvent(crane, system);
         	event.setOccurrenceTime(this.getOccurrenceTime()+this.system.getEventDuration(EventConstants.CART_MOVING_LOAD_EVENT));
             this.system.agendFutureEvent(event);
         }
