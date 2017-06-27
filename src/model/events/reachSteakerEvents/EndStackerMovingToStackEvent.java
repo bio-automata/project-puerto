@@ -13,11 +13,11 @@ import model.system.Systema;
 /**
  * Created by dicus on 11/06/17.
  */
-public class EndStackerMovingContainerToStackEvent extends Event{
-	Entity stacker;
-    public EndStackerMovingContainerToStackEvent(Entity steaker, Systema system){
+public class EndStackerMovingToStackEvent extends Event{
+	Entity stack;
+    public EndStackerMovingToStackEvent(Entity steak, Systema system){
     	super(system);
-    	this.stacker = steaker;
+    	this.stack = steak;
     }
 
     public void execute(){
@@ -68,17 +68,14 @@ public class EndStackerMovingContainerToStackEvent extends Event{
             
         //se não há rtg na fila da pilha 
         if(!this.system.hasEntityAvailableInQueue("stacker waiting for stack "+stack.getNumericVariable(StackConstants.INDEX))){
-        	double eventTimeDuration = stack.getNumericVariable(StackConstants.INDEX)*10;        	
-        	stack.setDependence("stacker", this.stacker);
+        	stack.setDependence("stacker", this.stack);
         	Event event = new EndStackerStackContainerEvent(stack, this.system);
-            //event.setOccurrenceTime(this.system.getClock()+this.system.getEventDuration(EventConstants.STACKER_STACKING_CONTAINER_EVENT));
-        	
-        	event.setOccurrenceTime(eventTimeDuration);
+            event.setOccurrenceTime(this.system.getClock()+this.system.getEventDuration(EventConstants.STACKER_STACKING_CONTAINER_EVENT));
             this.system.agendFutureEvent(event);
         }
         //do contrário enfileira rtg 
         else{
-        	this.system.addEntityInQueue("stacker waiting for stack "+stack.getNumericVariable(StackConstants.INDEX), stacker);
+        	this.system.addEntityInQueue("stacker waiting for stack "+stack.getNumericVariable(StackConstants.INDEX), stack);
         }
     }
 }

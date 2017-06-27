@@ -1,10 +1,12 @@
 package model.system;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-
-
+import model.constants.SystemConstants;
 import model.entities.Entity;
 import model.events.Event;
 import model.random.Random;
@@ -213,5 +215,20 @@ public class Systema {
     
     public void report(String news){
     	System.out.printf("%.4f: %s\n", this.getClock(), news);
+    }
+    
+    public void endSimulation(String address){
+    	this.simulating = false;
+		try {
+			BufferedWriter file;
+			file = new BufferedWriter(new FileWriter(address));
+			file.write("Indicdores_de_desempenho:");
+			file.write("\nProdutividade_da_grua "+this.getVariable(SystemConstants.CRANE_CONTAINER_PRODUCTION)/this.getClock());
+			file.write("\nProdutividade_dos_RTGs "+this.getVariable(SystemConstants.RTG_CONTAINER_PRODUCTION)/this.getClock());
+			file.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Erro ao gerar relátório de saída");
+		}
     }
 }

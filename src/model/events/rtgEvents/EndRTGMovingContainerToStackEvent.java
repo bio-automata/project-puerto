@@ -54,7 +54,7 @@ public class EndRTGMovingContainerToStackEvent extends Event{
             this.system.report(stak.getNumericVariable(StackConstants.NUMBER_OF_CONTAINERS)+"");
             
             if(stak.getNumericVariable(StackConstants.NUMBER_OF_CONTAINERS)>=stak.getNumericVariable(StackConstants.MAX_NUMBER_OF_CONTAINERS)){
-            	this.system.report("A pilha estava chiea, rtg criará nova pilha");
+            	this.system.report("A pilha estava cheia, rtg criará nova pilha");
             	//cria uma nova pilha
             	this.system.setVariable(SystemConstants.NUMBER_OF_CONTAINERSTAKS, this.system.getVariable(SystemConstants.NUMBER_OF_CONTAINERSTAKS)+1);
             	
@@ -69,9 +69,11 @@ public class EndRTGMovingContainerToStackEvent extends Event{
             
         //se não há rtg na fila da pilha 
         if(!this.system.hasEntityAvailableInQueue("rtg waiting for stack "+stak.getNumericVariable(StackConstants.INDEX))){
+        	double eventTimeDuration = stak.getNumericVariable(StackConstants.INDEX)*10;
         	stak.setDependence("rtg", this.rtg);
         	Event event = new EndRTGStackContainerEvent(stak, this.system);
-            event.setOccurrenceTime(this.system.getClock()+this.system.getEventDuration(EventConstants.RTG_STACKING_CONTAINER_EVENT));
+            //event.setOccurrenceTime(this.system.getClock()+this.system.getEventDuration(EventConstants.RTG_STACKING_CONTAINER_EVENT));
+        	event.setOccurrenceTime(eventTimeDuration);
             this.system.agendFutureEvent(event);
         }
         //do contrário enfileira rtg 

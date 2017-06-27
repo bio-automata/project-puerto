@@ -90,7 +90,7 @@ public class EndEquipDockingEvent extends Event{
             //entra em fila de espera
         	
         	this.system.report("Não há navios em espera, equipe está ociosa");
-            system.getEntityQueueSet().addEntity("equip", this.equip);
+            system.addEntityInQueue("equip", this.equip);
         }
     }
 }

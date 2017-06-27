@@ -24,7 +24,7 @@ public class EndStackerUnloadCartEvent extends Event {
         Entity cart = this.steaker.getDependence("cart");
         
         //descarrega carreta
-        //agenda retorno da carreta 
+        //agenda retorno da carreta
         Event event = new EndCartMovingEmptyCartEvent(cart, system);
         event.setOccurrenceTime(this.system.getClock()+this.system.getEventDuration(EventConstants.CART_MOVING_EMPTY_EVENT));
         this.system.agendFutureEvent(event);

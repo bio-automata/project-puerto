@@ -43,11 +43,11 @@ public class EndCartMovingLoadCartEvent extends Event{
         	
         	Event event = new EndStackerUnloadCartEvent(steaker, this.system);
         	event.setOccurrenceTime(this.system.getClock()+this.system.getEventDuration(EventConstants.STACKER_EMPTY_RETURNING_EVENT));
-        	//this.system.agendFutureEvent(event);
+        	this.system.agendFutureEvent(event);
         }
         //
         else{
-            system.getEntityQueueSet().addEntity("cart waiting unload", cart);
+            system.addEntityInQueue("cart waiting unload", cart);
             system.report("Carreta aguardando para descarregar container");
         }
     }

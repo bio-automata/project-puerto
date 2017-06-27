@@ -35,7 +35,7 @@ public class EndCraneMovingContainerEvent extends Event{
             system.getFutureEventList().addEvent(event);
         }
         else{
-            system.getEntityQueueSet().addEntity("crane waiting cart", crane);
+            system.addEntityInQueue("crane waiting cart", crane);
             this.system.report("Não há transporte, grua aguardando carreta");
         }
     }

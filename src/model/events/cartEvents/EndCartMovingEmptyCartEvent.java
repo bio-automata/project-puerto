@@ -32,7 +32,7 @@ public class EndCartMovingEmptyCartEvent extends Event{
             this.system.agendFutureEvent(event);
         }
         else{
-        	this.system.addEntityInEntitySet("cart", cart);
+        	this.system.addEntityInQueue("cart", cart);
         	system.report("Carreta ociosa");
         }
     }

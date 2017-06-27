@@ -21,7 +21,7 @@
 
 # Tempo maximo de simulacao, em segundos. O valor abaixo
 # corresponde a 30 dias * 24 horas * 60 minutos * 60 segundos.
-U TSM 25920
+U TSM 500
 
 ############################################################
 #                                                          #
@@ -65,7 +65,7 @@ G RET 0.25 0.41 0.73
 ############################################################
 
 # Quantidade de equipes disponiveis para atracar/desatracar
-E QTD 5
+E QTD 2
 
 # Tempo de atracamento
 E ATR 0.5 1.5 2.0
