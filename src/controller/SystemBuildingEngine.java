@@ -48,6 +48,15 @@ public class SystemBuildingEngine {
     		event.setOccurrenceTime(time);
         	system.agendFutureEvent(event);
     	}
+    	
+    	//numero de estações
+    	int i, qtd = 10;
+    	
+    	for(i=0;i<qtd;i++){
+    		system.addEntityInQueue("railway", new Entity());
+    	}
+    	
+    	system.setVariable(SystemConstants.NUMBER_OF_CONTAINERSTAKS, 0.0);	//numero de pilhas no sistema
 	}
 	
 	

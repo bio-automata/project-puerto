@@ -37,8 +37,8 @@ public class EndCartMovingLoadCartEvent extends Event{
         	this.system.agendFutureEvent(event);        	
         }
         //
-        else if (system.hasEntityAvailableInQueue("staCker")){
-        	Entity steaker = system.getEntityFromQueue("staCker");
+        else if (system.hasEntityAvailableInQueue("stacker")){
+        	Entity steaker = system.getEntityFromQueue("stacker");
         	steaker.setDependence("cart", cart);
         	
         	Event event = new EndStackerUnloadCartEvent(steaker, this.system);

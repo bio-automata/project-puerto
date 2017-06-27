@@ -3,7 +3,6 @@ package model.events.reachSteakerEvents;
 import java.util.Random;
 
 import model.constants.RainlwayConstants;
-import model.constants.StackConstants;
 import model.entities.Entity;
 import model.events.Event;
 import model.system.Systema;

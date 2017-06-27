@@ -26,10 +26,10 @@ public class EndStackerEmptyReturningEvent extends Event {
         
         //existe vagão vazio o terminal
         
-        Entity train = this.stacker.getDependence("train");
-        
+        Entity train = this.stacker.getDependence("train");        
         
         if(train.getNumericVariable(RainlwayConstants.NUMBER_OF_WAGONS)>0){
+        	this.system.addEntityInQueue("train loading", train);
         	// sortear pilha destino
         	//sortear a duração
         	
@@ -48,15 +48,14 @@ public class EndStackerEmptyReturningEvent extends Event {
                 if(stack.getNumericVariable(StackConstants.NUMBER_OF_CONTAINERS)>0){
                 	//retira container da pilha
                 	//agenda o evento de movimentar para a pilha com intenção de descarregar
+                	
+                	this.stacker.setDependence("stack", stack);
+                	stack.setDependence("stacker", this.stacker);
+                	double eventTimeDuration = this.system.getClock()+stack.getNumericVariable(StackConstants.INDEX)*10;
+                	
                 	Event event = new EndStackerMovingToStackEvent(stack, system);
-                	
-                	
-                	stack = new Entity();
-                	stack.setNumericVariable(StackConstants.INDEX, this.system.getVariable(SystemConstants.NUMBER_OF_CONTAINERSTAKS));
-                	stack.setNumericVariable(StackConstants.NUMBER_OF_CONTAINERS, 0);
-                	stack.setNumericVariable(StackConstants.MAX_NUMBER_OF_CONTAINERS, 5);
-                	
-                	this.system.addEntityInEntitySet(SystemConstants.CONTAINER_STAKS, stack);
+                	event.setOccurrenceTime(eventTimeDuration);
+                	this.system.agendFutureEvent(event);
                 	break;
                 }
                 else{

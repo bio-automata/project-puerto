@@ -22,7 +22,7 @@ public class EndStackerStackContainerEvent extends Event{
     }
 
     public void execute(){
-        system.setClock(this.getDurationTime());
+        system.setClock(this.getOccurrenceTime());
         this.system.report("Reach Stacker empilhou container na pilha");
 
         Entity stacker = stack.getDependence("stacker");
@@ -30,11 +30,12 @@ public class EndStackerStackContainerEvent extends Event{
         
         
         //existe vagão disponíveel na composição aguardando
-        if(this.system.hasEntityAvailableInQueue("train unloading")){
+        if(this.system.hasEntityAvailableInQueue("train loading")){
         	//sorteia duração para se movimentar até pilha de destino
+        	Entity train = this.system.getEntityFromQueue("train loading");
+        	stacker.setDependence("train", train);
         	
-        	
-        	//qqagenda descarregamento da pilha
+        	//agenda descarregamento da pilha
         	//seleciona pilha para desempilhar
         	int stackQuantity;
         	int stackindex; 
@@ -43,25 +44,17 @@ public class EndStackerStackContainerEvent extends Event{
         	i = 20;			//procura por 20 vezes
         	stackQuantity = this.system.getVariable(SystemConstants.NUMBER_OF_CONTAINERSTAKS).intValue();	//numero de pilhas no sistema
         	while(i>0){
+        		this.system.report("Encontrou uma pilha para desempilhar");
         		i--;        	
         		stackindex = new Random().nextInt(stackQuantity);            
         	    Entity stack = this.system.getEntityFromSet(SystemConstants.CONTAINER_STAKS, stackindex);
         	                
         	    if(stack.getNumericVariable(StackConstants.NUMBER_OF_CONTAINERS)>0){
-        	    	stack = new Entity();
-        	    	stack.setNumericVariable(StackConstants.INDEX, this.system.getVariable(SystemConstants.NUMBER_OF_CONTAINERSTAKS));
-        	    	stack.setNumericVariable(StackConstants.NUMBER_OF_CONTAINERS, 0);
-        	    	stack.setNumericVariable(StackConstants.MAX_NUMBER_OF_CONTAINERS, 5);
-        	    	
-        	    	
-        	    	double eventTimeDuration = stack.getNumericVariable(StackConstants.INDEX)*10;
+        	    	double eventTimeDuration = this.system.getClock()+stack.getNumericVariable(StackConstants.INDEX)*10;
         	    	//retira container da pilha
         	    	//agenda o evento de movimentar para a pilha com intenção de descarregar
         	    	Event event = new EndStackerMovingToStackEvent(stack, system);
         	    	event.setOccurrenceTime(eventTimeDuration);
-        	    	this.system.agendFutureEvent(event);
-        	    	
-        	    	this.system.addEntityInEntitySet(SystemConstants.CONTAINER_STAKS, stack);
         	    	break;
         	    }
         	    else{
@@ -80,8 +73,19 @@ public class EndStackerStackContainerEvent extends Event{
             this.system.addEntityInQueue("stacker", stacker);
         }
         
+        
         //se existe rtg/steaker aguardadno na fila da pilha, já aguarda novo empilhamento
-        if(this.system.hasEntityAvailableInQueue("stacker waiting for stack "+this.stack.getNumericVariable(StackConstants.INDEX))){
+        
+        if(this.system.hasEntityAvailableInQueue("rtg waiting for stack "+this.stack.getNumericVariable(StackConstants.INDEX))){
+        	//retira veiculo da fila e atuliza ponteiro da pilha
+        	Entity rtg = this.system.getEntityFromQueue("rtg waiting for stack "+this.stack.getNumericVariable(StackConstants.INDEX));
+        	stack.setDependence("rtg", rtg);
+        	
+        	Event event = new EndRTGStackContainerEvent(stack, this.system);
+            event.setOccurrenceTime(this.system.getClock()+this.system.getEventDuration(EventConstants.STACKER_STACKING_CONTAINER_EVENT));
+            this.system.agendFutureEvent(event);
+        }
+        else if(this.system.hasEntityAvailableInQueue("stacker waiting for stack "+this.stack.getNumericVariable(StackConstants.INDEX))){
         	//retira veiculo da fila e atuliza ponteiro da pilha
         	stacker = this.system.getEntityFromQueue("stacker waiting for stack "+this.stack.getNumericVariable(StackConstants.INDEX));
         	stack.setDependence("stacker", stacker);
@@ -90,7 +94,14 @@ public class EndStackerStackContainerEvent extends Event{
             event.setOccurrenceTime(this.system.getClock()+this.system.getEventDuration(EventConstants.STACKER_STACKING_CONTAINER_EVENT));
             this.system.agendFutureEvent(event);
         }
-        
-        //existe vagão no terminal
+        else if(this.system.hasEntityAvailableInQueue("stacker waiting for unstack "+this.stack.getNumericVariable(StackConstants.INDEX))){
+        	//retira veiculo da fila e atuliza ponteiro da pilha
+        	stacker = this.system.getEntityFromQueue("stacker waiting for unstack "+this.stack.getNumericVariable(StackConstants.INDEX));
+        	stack.setDependence("stacker", stacker);
+        	
+        	Event event = new EndStackerUnstackContainerEvent(stack, this.system);
+            event.setOccurrenceTime(this.system.getClock()+this.system.getEventDuration(EventConstants.STACKER_UNSTACKING_CONTAINER_EVENT));
+            this.system.agendFutureEvent(event);
+        }
     }
 }

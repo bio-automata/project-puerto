@@ -20,7 +20,7 @@ public class EndStackerUnloadCartEvent extends Event {
 
     public void execute() {
     	this.system.setClock(this.getOccurrenceTime());
-        system.report("Steaker descarrega container da carreta");
+        system.report("Staker descarrega container da carreta");
         Entity cart = this.steaker.getDependence("cart");
         
         //descarrega carreta
@@ -28,11 +28,11 @@ public class EndStackerUnloadCartEvent extends Event {
         Event event = new EndCartMovingEmptyCartEvent(cart, system);
         event.setOccurrenceTime(this.system.getClock()+this.system.getEventDuration(EventConstants.CART_MOVING_EMPTY_EVENT));
         this.system.agendFutureEvent(event);
-
         
         //sorteia 
         event = new EndStackerMovingContainerToStackEvent(this.steaker, system);
-        event.setOccurrenceTime(this.system.getClock()+this.system.getEventDuration(EventConstants.RTG_MOVING_CONTAINER_TO_STACK_EVENT));
+        event.setOccurrenceTime(this.system.getClock()+this.system.getEventDuration(EventConstants.STACKER_MOVING_CONTAINER_TO_STACK_EVENT));
+        //event.setOccurrenceTime(this.system.getClock());
         this.system.agendFutureEvent(event);
     }
 }

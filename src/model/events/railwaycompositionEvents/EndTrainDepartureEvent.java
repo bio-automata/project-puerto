@@ -21,12 +21,23 @@ public class EndTrainDepartureEvent extends Event{
 
     public void execute(){
         system.setClock(this.getOccurrenceTime());
-        
+        this.system.report("Composição ferroviária despachada");
         //realiza alguma coisa aqui
         
-        if(this.system.hasEntityAvailableInQueue(""))
-
         
-        this.train = null;
+        Entity railway = train.getDependence("railway");       
+        
+        //se há composição ferroviária à espera de carregamento
+        if(this.system.hasEntityAvailableInQueue("train waiting railway")){
+        	this.system.report("Em breve já começará carregamento de outra");
+        	train = this.system.getEntityFromQueue("train waiting railway");
+        	train.setDependence("railway", railway);
+        }
+        //senão terminal está ocionso
+        else{
+        	this.system.report("Não há fila de espera, Terminal de carga ocioso");
+        	this.train = null;
+        	this.system.addEntityInQueue("railway", railway);
+        }
     }
 }

@@ -21,8 +21,9 @@ public class EndStackerMovingContainerToStackEvent extends Event{
     }
 
     public void execute(){
-        system.setClock(this.getDurationTime());
-
+        system.setClock(this.getOccurrenceTime());
+        system.report("Stacker movimentou-se até o pátio à procura de uma pilha");
+        
         //rtg seleciona uma pilha e agenda evento para movimentar até ela 
         Entity stack;
         //se não há pilhas no pátio, cria uma nova pilha
@@ -43,14 +44,14 @@ public class EndStackerMovingContainerToStackEvent extends Event{
         //se há pilha
         else{
         	//sorteia uma pilha
-        	System.out.print("Numero de pilhas no pátio >>");
-        	System.out.println(this.system.getVariable(SystemConstants.NUMBER_OF_CONTAINERSTAKS).intValue());
+        	this.system.report("Numero de pilhas no pátio >>"+this.system.getVariable(SystemConstants.NUMBER_OF_CONTAINERSTAKS).intValue());
+        	
         	
         	int stackQuantity = this.system.getVariable(SystemConstants.NUMBER_OF_CONTAINERSTAKS).intValue();	//numero de pilhas no sistema
             int stackindex = new Random().nextInt(stackQuantity);
             
             stack = this.system.getEntityFromSet(SystemConstants.CONTAINER_STAKS, stackindex);
-            System.out.println(stack.getNumericVariable(StackConstants.NUMBER_OF_CONTAINERS));
+            this.system.report("Numero de containers na pilha "+stackindex+" >> "+stack.getNumericVariable(StackConstants.NUMBER_OF_CONTAINERS).intValue());
             
             if(stack.getNumericVariable(StackConstants.NUMBER_OF_CONTAINERS)>=stack.getNumericVariable(StackConstants.MAX_NUMBER_OF_CONTAINERS)){
             	this.system.report("A pilha estava chiea, stacker criará nova pilha");
@@ -58,17 +59,18 @@ public class EndStackerMovingContainerToStackEvent extends Event{
             	this.system.setVariable(SystemConstants.NUMBER_OF_CONTAINERSTAKS, this.system.getVariable(SystemConstants.NUMBER_OF_CONTAINERSTAKS)+1);
             	
             	stack = new Entity();
-            	stack.setNumericVariable(StackConstants.INDEX, this.system.getVariable(SystemConstants.NUMBER_OF_CONTAINERSTAKS));
+            	stack.setNumericVariable(StackConstants.INDEX, this.system.getVariable(SystemConstants.NUMBER_OF_CONTAINERSTAKS)+1);
             	stack.setNumericVariable(StackConstants.NUMBER_OF_CONTAINERS, 0);
             	stack.setNumericVariable(StackConstants.MAX_NUMBER_OF_CONTAINERS, 5);
             	
             	this.system.addEntityInEntitySet(SystemConstants.CONTAINER_STAKS, stack);
             }
         }
-            
+        
         //se não há rtg na fila da pilha 
-        if(!this.system.hasEntityAvailableInQueue("stacker waiting for stack "+stack.getNumericVariable(StackConstants.INDEX))){
-        	double eventTimeDuration = stack.getNumericVariable(StackConstants.INDEX)*10;        	
+        if((!this.system.hasEntityAvailableInQueue("rtg waiting for stack "+stack.getNumericVariable(StackConstants.INDEX))) && (!this.system.hasEntityAvailableInQueue("stacker waiting for stack "+stack.getNumericVariable(StackConstants.INDEX))) && (!this.system.hasEntityAvailableInQueue("stacker waiting for unstack "+stack.getNumericVariable(StackConstants.INDEX)))){
+        	this.system.report("Não há fila na pilha, Reach Stacker pode empilhar");
+        	double eventTimeDuration = this.system.getClock()+stack.getNumericVariable(StackConstants.INDEX)*10;
         	stack.setDependence("stacker", this.stacker);
         	Event event = new EndStackerStackContainerEvent(stack, this.system);
             //event.setOccurrenceTime(this.system.getClock()+this.system.getEventDuration(EventConstants.STACKER_STACKING_CONTAINER_EVENT));
@@ -77,7 +79,8 @@ public class EndStackerMovingContainerToStackEvent extends Event{
             this.system.agendFutureEvent(event);
         }
         //do contrário enfileira rtg 
-        else{
+        else
+        	this.system.report("Fila em espera, Reach Stacker aguardando para empilhar");{
         	this.system.addEntityInQueue("stacker waiting for stack "+stack.getNumericVariable(StackConstants.INDEX), stacker);
         }
     }
