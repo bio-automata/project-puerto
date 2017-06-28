@@ -11,11 +11,12 @@ public class SimulatingTest {
 
 		int i, j, k, n;
 		
-		n = 100;
-		k = 4;
-		for(i=0;i<n;i++){
-			for(j=0;j<k;j++){
-				SimulatorEngine.simulate("cenario"+i+".txt","saida"+i+".txt");
+		
+		for(i=2;i<4;i++){
+			System.out.println("\nRodando cenário: "+i);
+			for(j=0;j<100;j++){
+				System.out.println("\nIteração: "+j+" do cenário "+i);
+				SimulatorEngine.simulate("cenario"+i+".txt","saida_15_dias_cenario_"+i+".txt");
 			}
 		}
 		
