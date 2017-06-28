@@ -41,7 +41,7 @@ public class EndStackerStackContainerEvent extends Event{
         	int stackindex; 
         	int i;
 
-        	i = 20;			//procura por 20 vezes
+        	i = 5;			//procura por 20 vezes
         	stackQuantity = this.system.getVariable(SystemConstants.NUMBER_OF_CONTAINERSTAKS).intValue();	//numero de pilhas no sistema
         	while(i>0){
         		this.system.report("Encontrou uma pilha para desempilhar");

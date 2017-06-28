@@ -1,13 +1,10 @@
 package model.events.reachSteakerEvents;
 
-import java.util.Random;
 
 import model.constants.EventConstants;
 import model.constants.StackConstants;
-import model.constants.SystemConstants;
 import model.entities.Entity;
 import model.events.Event;
-import model.events.rtgEvents.EndRTGStackContainerEvent;
 import model.system.Systema;
 
 /**

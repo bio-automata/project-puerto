@@ -3,17 +3,11 @@ package model.events.railwaycompositionEvents;
 
 import model.constants.EventConstants;
 import model.constants.RainlwayConstants;
-import model.constants.ShipConstants;
 import model.constants.StackConstants;
 import model.constants.SystemConstants;
 import model.entities.Entity;
-import model.entities.ships.ContainerShipFactory;
 import model.events.Event;
-import model.events.equipEvents.EndEquipDockingEvent;
-import model.events.reachSteakerEvents.EndStackerMovingContainerToRailwayEvent;
-import model.events.reachSteakerEvents.EndStackerMovingContainerToStackEvent;
 import model.events.reachSteakerEvents.EndStackerMovingToStackEvent;
-import model.random.Random;
 import model.system.Systema;
 
 /**
@@ -65,7 +59,7 @@ public class EndTrainArrivingEvent extends Event{
             	int stackindex; 
             	int i;
 
-            	i = 20;			//procura por 20 vezes
+            	i = 5;			//procura por 20 vezes
             	stackQuantity = this.system.getVariable(SystemConstants.NUMBER_OF_CONTAINERSTAKS).intValue();	//numero de pilhas no sistema
             	while(i>0&&stackQuantity>0){
             		i--;        	
