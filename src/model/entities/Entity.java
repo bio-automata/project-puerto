@@ -3,19 +3,22 @@ package model.entities;
 import java.util.HashMap;
 import java.util.Map;
 
+import model.system.collections.EntityPackager;
+
 /**
- * Created by dicus on 07/05/17.
+  
  */
 public class Entity {
     private Map<String,String> textVariables;
     private Map<String,Double> numericVariables;
     private Map<String,Entity> dependences;
+    private EntityPackager entityPackager;
 
     public Entity(){
-    	
     	this.textVariables = new HashMap<>(); 
     	this.numericVariables = new HashMap<>();
     	this.dependences = new HashMap<>();
+    	this.entityPackager = new EntityPackager();
     }    
 
     
@@ -55,6 +58,27 @@ public class Entity {
 
         return null;
     }
+    
+    
+    //entity packeger
+    public void addEntityInDataStructure(int structure, String key, Entity entity){
+        this.entityPackager.addEntity(structure, key, entity);
+    }
+
+    public Entity getEntityFromDataStructure(int structure, String key){
+        return this.entityPackager.getEntity(structure,key);
+    }
+    
+    public Entity getEntityFromDataStructure(int structure, String key, int id){
+        return this.entityPackager.getEntity(structure,key,id);
+    }        
+    
+       
+    public Boolean hasEntityAvailableInDataStructure(String key){
+    	return this.entityPackager.available(key);
+    }
+    
+    //-------------------------------------------//
     
     
     public void setDependence(String dependence, Entity entity){

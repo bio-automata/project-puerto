@@ -1,6 +1,10 @@
 package model.events;
 
-import model.system.Systema;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import model.entities.Entity;
+import model.system.System;
 
 /**
 
@@ -44,14 +48,12 @@ import model.system.Systema;
  */
 
 public abstract class Event {
-	protected Systema system;
+	protected System system;
     private double occurrenceTime;
-    private double durationTime;
 
-    public Event(Systema system){
+    public Event(System system){
     	this.system = system; 
         this.occurrenceTime = -1;
-        this.durationTime = -1;
     }
 
     public double getOccurrenceTime(){
@@ -61,10 +63,10 @@ public abstract class Event {
     public void setOccurrenceTime(double occurrenceTime){
         this.occurrenceTime= occurrenceTime;
     }
-
-    public double getDurationTime(){
-        return this.durationTime;
+    
+    public void addLogic(){
+    	
     }
-
+        
     public abstract void execute();
 }

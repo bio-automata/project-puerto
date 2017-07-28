@@ -28,21 +28,22 @@ public class FutureEventList {
         return event;
     }
 
+    public void addEvent(Event term, int i){
+        if(this.futureEventList.size()==0){
+            this.futureEventList.add(term);
+        }
+        else{
+            for(i=0;i<this.futureEventList.size();i++){
+            	if(term.getOccurrenceTime()<=this.futureEventList.get(i).getOccurrenceTime()){
+            		break;
+            	}
+            }
+            this.futureEventList.add(i,term);    
+       }
+    }
     
     
     public void addEvent(Event term){
-    	/*
-    	Collections.sort(this.futureEventList, new Comparator<Event>() {
-            @Override
-            public int compare(EventNotice eventNotice, EventNotice t1) {
-                if(eventNotice.getHoraFim()>t1.getHoraFim()) return 1;
-                if(eventNotice.getHoraFim()<t1.getHoraFim()) return -1;
-
-                return 0;
-            }
-    		});
-    	*/
-    	
     	if(this.futureEventList.size()==0){
     		this.futureEventList.add(term);
     	}

@@ -1,8 +1,7 @@
 package model.random;
 
 
-public class TriangularDistribution {
-
+public class TriangularDistribution extends RandomDistribution{
     private Double a;
     private Double b;
     private Double c;
@@ -13,27 +12,19 @@ public class TriangularDistribution {
         this.c = c;
     }
 
-    public Double getA() {
-        return a;
-    }
+	@Override
+	public double generate(Random random) {
+		double x;
 
-    public void setA(Double a) {
-        this.a = a;
-    }
-
-    public Double getB() {
-        return b;
-    }
-
-    public void setB(Double b) {
-        this.b = b;
-    }
-
-    public Double getC() {
-        return c;
-    }
-
-    public void setC(Double c) {
-        this.c = c;
-    }
+        x = random.percentual();
+        if(x>=a && x<=c){
+            return (2*(x-a))/((b-a)*(c-a));
+        }
+        if(x>=c && x<=b){
+            return (2*(b-x))/((b-a)*(b-c));
+        }
+        else{
+            return 0;
+        }
+	}
 }

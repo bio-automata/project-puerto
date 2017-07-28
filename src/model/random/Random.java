@@ -1,9 +1,7 @@
 package model.random;
 
-import java.util.HashMap;
-
 /**
- * Created by dicus on 28/04/17.
+
  */
 public class Random {
     private long A = 69069;
@@ -19,6 +17,7 @@ public class Random {
     
     public void setSeed(double seed){
         this.currentValue = seed;
+        
     }
 
     //distribuição uniforme e suas variações
@@ -42,6 +41,10 @@ public class Random {
         return (double)this.uniform()/M;
     }
 
+    
+    
+    
+    
     //funções derivadas da função percentual
     public double normal(double mean, double variance){
         int i, n;
@@ -56,74 +59,15 @@ public class Random {
         return mean+variance*( ( (sum-(n/2)) / ((Math.sqrt(n/12.0)) ) ) );
     }
 
-    public double exponential(double lambda){
-        return -(1.0/lambda)*Math.log(1.0-this.percentual());
-    }
 
-    /*public double triangular(double a, double b, double c){
-        double x;
-
-        x = this.percentual();
-        if(x>=a && x<c){
-            return (2*(x-a))/((b-a)*(c-a));
-        }
-        if(x>c && x<=b){
-            return (2*(b-x))/((b-a)*(b-c));
-        }
-        else{
-            return 2/(b-a);
-        }
-    }*/
-
-    public double triangular( double xMin, double c,  double xMax){
-
-        double p = new java.util.Random().nextDouble();//uniform(0,1);
-        double q = 1.0 - p;
-
-        if (p <= (c - xMin) / (xMax - xMin)){
-            return xMin + Math.sqrt((xMax - xMin) * (c - xMin) * p);
-        }else {
-            return xMax - Math.sqrt((xMax - xMin) * (xMax - c) * q);
-        }
-
-    }
 
     public double poison(){     //ainda não implementada
         return 0;
     }
-
-    //sorteia qualquer tipo de distribuição
-    public double raffle(int distribution, HashMap<String,Double> params){
-        switch(distribution){
-            case RandomConstants.UNIFORM:
-                switch(params.size()){
-                    case 0:
-                        return this.uniform();
-
-                    case 1:
-                        return this.uniform(params.get("n").intValue());
-
-                    case 2:
-                        return this.uniform(params.get("m").intValue(),params.get("n").intValue());
-                }
-
-            case RandomConstants.PERCENTUAL:
-                return this.percentual();
-
-            case RandomConstants.NORMAL:
-                return this.normal(params.get("mean"),params.get("variance"));
-
-            case RandomConstants.EXPOENENTIAL:
-                return this.exponential(params.get("lambda"));
-
-            case RandomConstants.TRIANGULAR:
-                return this.triangular(params.get("a"),params.get("b"),params.get("c"));
-
-            case RandomConstants.POISON:
-
-                break;
-        }
-
-        return 0;
+    
+    public double generate(){
+    	
+    	
+    	return -1;
     }
 }

@@ -9,9 +9,6 @@ package model.random;
     equip
     cranes
     ships
-
-
-
  */
 
 public class RandomConstants {
